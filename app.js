@@ -3,6 +3,8 @@ const app = server();
 
 app.use(server.json());
 
+const apikey = '9898sd98s9ds9s87384738';
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
@@ -19,6 +21,7 @@ app.post('/todos', (req, res) => {
   });
   res.status(201).json({
     message: 'Todo created successfully',
+    data: apikey,
   });
 });
 
