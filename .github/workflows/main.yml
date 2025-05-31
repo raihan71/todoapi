@@ -9,21 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo codebase 🚀
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Install dependencies codebase 💹
         run: npm install
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@v5.0.0
-        with:
-          projectBaseDir: ./
-          args: >
-            -Dsonar.organization=${{secrets.SONARCLOUD_ORG}}
-            -Dsonar.projectKey=${{secrets.SONARCLOUD_ORG_KEY}}
-            -Dsonar.projectName=todoapi
-            -Dsonar.projectVersion=1.0
-            -Dsonar.sources=app.js
-            -Dsonar.verbose=true
-            -Dsonar.exclusions=node_modules/**
+        uses: SonarSource/sonarcloud-github-action@v1.8
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
