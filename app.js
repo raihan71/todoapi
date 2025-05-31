@@ -1,6 +1,7 @@
 const server = require('express');
 const app = server();
 
+app.disable('x-powered-by');
 app.use(server.json());
 
 const port = process.env.PORT || 3000;
