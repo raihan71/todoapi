@@ -5,7 +5,25 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo codebase 🚀
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Snyk to check for vulnerabilities 🔍
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo codebase 🚀
@@ -17,18 +35,23 @@ jobs:
         with:
           node-version: 20.x
       - name: Install dependencies codebase 💹
-        run: npm install
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-      - name: Run Snyk to check for vulnerabilities 🔍
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: npm ci
+      - name: Run tests  🧪
+        run: npm test
+  publish:
+    runs-on: ubuntu-latest
+    needs: [security, build]
+    steps:
+      - name: Checkout repo codebase 🚀
+        uses: actions/checkout@v4
         with:
-          command: code test
+          fetch-depth: 0
+      - name: Setup Node.js environment 🛠
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: Install dependencies codebase 💹
+        run: npm ci
       - name: Deploy to AWS 💹 + 🚀
         uses: appleboy/ssh-action@master
         with:
