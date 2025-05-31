@@ -13,7 +13,7 @@ jobs:
       - name: Install dependencies codebase 💹
         run: npm install
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         with:
           projectBaseDir: ./
           args: >
@@ -24,7 +24,6 @@ jobs:
             -Dsonar.sources=app.js
             -Dsonar.verbose=true
             -Dsonar.exclusions=node_modules/**
-            
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
