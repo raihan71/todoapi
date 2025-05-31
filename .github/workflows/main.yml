@@ -19,7 +19,7 @@ jobs:
           args: >
             -Dsonar.organization=${{secrets.SONARCLOUD_ORG}}
             -Dsonar.projectKey=${{secrets.SONARCLOUD_ORG_KEY}}
-            -Dsonar.projectName=jeiman_nodejs-backend-starter
+            -Dsonar.projectName=todoapi
             -Dsonar.projectVersion=1.0
             -Dsonar.sources=app.js
             -Dsonar.verbose=true
