@@ -9,13 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo codebase 🚀
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Setup Node.js environment 🛠
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
       - name: Install dependencies codebase 💹
         run: npm install
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1.8
+        uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
