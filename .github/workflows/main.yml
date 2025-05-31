@@ -13,9 +13,9 @@ jobs:
       - name: Install dependencies codebase 💹
         run: npm install
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v4.0.0
+        uses: sonarsource/sonarcloud-github-action@master
         with:
-          projectBaseDir: app/src
+          projectBaseDir: ./
           args: >
             -Dsonar.organization=${{secrets.SONARCLOUD_ORG}}
             -Dsonar.projectKey=${{secrets.SONARCLOUD_ORG_KEY}}
