@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:latest
 WORKDIR /todoapi
 COPY package.json /todoapi
 RUN npm ci --no-audit
